@@ -1,0 +1,21 @@
+- name: Install Apache and Deploy Web Page
+  hosts: web
+  become: yes
+  tasks:
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Copy index.html
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+
+    - name: Ensure Apache is running
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
